@@ -1,5 +1,4 @@
-// js/firebase.js — Firebase setup + all data operations
-
+// js/firebase.js
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import { getAuth, signInAnonymously, signInWithPopup, GoogleAuthProvider, onAuthStateChanged }
   from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
@@ -16,9 +15,13 @@ const firebaseConfig = {
   appId: "1:382072424967:web:8d0b0159f1f7b3ba0e78a2"
 };
 
-// Detect placeholder config — export so index.html can show setup screen
-export const FIREBASE_CONFIGURED = firebaseConfig.apiKey !== "AIzaSyDbL5hPbfsR_8xXI9Tu84ulBMVGujfM_1s";
- 
+// SIMPLIFIED INITIALIZATION
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const FIREBASE_CONFIGURED = true; // Hardcode to true since you have your keys in there
+
+const googleProvider = new GoogleAuthProvider();
 let app, _auth, _db;
  
 if (FIREBASE_CONFIGURED) {
