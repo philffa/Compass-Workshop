@@ -7,19 +7,17 @@ import { getFirestore, doc, collection, setDoc, getDoc, getDocs, updateDoc, dele
   onSnapshot, query, orderBy, serverTimestamp, writeBatch }
   from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-// ── Replace with your Firebase project config ──────────────────────────────
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDbL5hPbfsR_8xXI9Tu84ulBMVGujfM_1s",
+  authDomain: "compass-workshop-7a0e1.firebaseapp.com",
+  projectId: "compass-workshop-7a0e1",
+  storageBucket: "compass-workshop-7a0e1.firebasestorage.app",
+  messagingSenderId: "382072424967",
+  appId: "1:382072424967:web:8d0b0159f1f7b3ba0e78a2"
 };
-// ───────────────────────────────────────────────────────────────────────────
 
 // Detect placeholder config — export so index.html can show setup screen
-export const FIREBASE_CONFIGURED = firebaseConfig.apiKey !== "YOUR_API_KEY";
+export const FIREBASE_CONFIGURED = firebaseConfig.apiKey !== "AIzaSyDbL5hPbfsR_8xXI9Tu84ulBMVGujfM_1s";
 
 let app, _auth, _db;
 
