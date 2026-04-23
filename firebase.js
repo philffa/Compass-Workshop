@@ -7,16 +7,25 @@ import { getFirestore, doc, collection, setDoc, getDoc, getDocs, updateDoc, dele
   onSnapshot, query, orderBy, serverTimestamp, writeBatch }
   from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
-// ── Replace with your Firebase project config ──────────────────────────────
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
-// ───────────────────────────────────────────────────────────────────────────
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDbL5hPbfsR_8xXI9Tu84ulBMVGujfM_1s",
+    authDomain: "compass-workshop-7a0e1.firebaseapp.com",
+    projectId: "compass-workshop-7a0e1",
+    storageBucket: "compass-workshop-7a0e1.firebasestorage.app",
+    messagingSenderId: "382072424967",
+    appId: "1:382072424967:web:8d0b0159f1f7b3ba0e78a2"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
