@@ -13,15 +13,14 @@ import { getFirestore, doc, collection, setDoc, getDoc, getDocs, updateDoc, dele
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDbL5hPbfsR_8xXI9Tu84ulBMVGujfM_1s",
-    authDomain: "compass-workshop-7a0e1.firebaseapp.com",
-    projectId: "compass-workshop-7a0e1",
-    storageBucket: "compass-workshop-7a0e1.firebasestorage.app",
-    messagingSenderId: "382072424967",
-    appId: "1:382072424967:web:8d0b0159f1f7b3ba0e78a2"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyDbL5hPbfsR_8xXI9Tu84ulBMVGujfM_1s",
+  authDomain: "compass-workshop-7a0e1.firebaseapp.com",
+  projectId: "compass-workshop-7a0e1",
+  storageBucket: "compass-workshop-7a0e1.firebasestorage.app",
+  messagingSenderId: "382072424967",
+  appId: "1:382072424967:web:8d0b0159f1f7b3ba0e78a2"
+};
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
