@@ -99,7 +99,7 @@ function renderAuth(app) {
 }
 
 // ── Boot ───────────────────────────────────────────────────────────────────
-onAuth(user => {
+onAuth(async (user) => { // Added 'async' here
   if (user) {
     state.user = user;
     if (!state.route) state.route = { view: 'home', params: {} };
@@ -107,6 +107,10 @@ onAuth(user => {
   } else {
     state.user = null;
     render();
-    signInAnon();
+    try {
+      await signInAnon(); // Added 'await' to ensure it finishes correctly
+    } catch (e) {
+      console.error("Initial auth failed", e);
+    }
   }
 });
