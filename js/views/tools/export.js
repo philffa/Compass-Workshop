@@ -80,7 +80,7 @@ export async function renderExport(container, { pid, project, currentWeek }) {
 async function generatePDF(pid, project, currentWeek, include) {
   // Load all data in parallel
   const [tasks, weekPlan, fixedBlocks, prevReview] = await Promise.all([
-    new Promise(resolve => {
+    new Promise(async(resolve => {
       const { onTasks } = await import('../../firebase.js').catch(() => ({}));
       // Use a one-shot snapshot via getDocs
       import('../../firebase.js').then(({ db, auth }) => {
