@@ -17,7 +17,7 @@ const firebaseConfig = {
 };
 
 // Detect placeholder config — export so index.html can show setup screen
-export const FIREBASE_CONFIGURED = firebaseConfig.apiKey !== "YOUR_API_KEY";
+export const FIREBASE_CONFIGURED = firebaseConfig.apiKey !== "AIzaSyDbL5hPbfsR_8xXI9Tu84ulBMVGujfM_1s";
  
 let app, _auth, _db;
  
