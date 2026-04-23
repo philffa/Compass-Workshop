@@ -1,0 +1,10 @@
+{
+  "name": "planwise",
+  "version": "1.0.0",
+  "description": "Project management and planning tools for students",
+  "scripts": {
+    "start": "npx serve . -l 3000",
+    "dev": "npx serve . -l 3000"
+  },
+  "private": true
+}

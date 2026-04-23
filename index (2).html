@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planwise</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Immediate loading state — visible before any JS runs -->
+  <div id="app">
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;font-family:system-ui,sans-serif;color:#6B6966;">
+      <div style="font-size:2rem;">🌱</div>
+      <div style="font-size:0.9rem;">Loading Planwise…</div>
+      <div id="load-error" style="display:none;max-width:400px;text-align:center;padding:1rem;background:#FCEBEB;border-radius:10px;color:#A32D2D;font-size:0.85rem;line-height:1.6;margin-top:8px;"></div>
+    </div>
+  </div>
+  <div id="toast-container"></div>
+
+  <script>
+    // Catch errors before modules load
+    window.addEventListener('error', function(e) {
+      const errEl = document.getElementById('load-error');
+      if (errEl) {
+        errEl.style.display = 'block';
+        errEl.innerHTML = '<strong>Something went wrong loading the app.</strong><br>' +
+          (e.message || 'Unknown error') + '<br><br>' +
+          '<em>If you opened this as a file:// URL, you need to serve it with a local server. See README.md.</em>';
+      }
+    });
+    window.addEventListener('unhandledrejection', function(e) {
+      const errEl = document.getElementById('load-error');
+      if (errEl) {
+        errEl.style.display = 'block';
+        const msg = e.reason?.message || String(e.reason) || 'Unknown error';
+        errEl.innerHTML = '<strong>App failed to start.</strong><br>' + msg +
+          '<br><br><em>Check your Firebase config in js/firebase.js — placeholder values will cause this.</em>';
+      }
+    });
+  </script>
+
+  <script type="module">
+    // Guard against placeholder Firebase config
+    import { FIREBASE_CONFIGURED } from './js/firebase.js';
+    if (!FIREBASE_CONFIGURED) {
+      document.getElementById('app').innerHTML = `
+        <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;">
+          <div style="max-width:480px;font-family:system-ui,sans-serif;">
+            <div style="font-size:2rem;margin-bottom:1rem;">🔧</div>
+            <h2 style="margin-bottom:0.5rem;color:#1a1917;">Firebase setup needed</h2>
+            <p style="color:#6B6966;margin-bottom:1rem;font-size:0.9rem;line-height:1.6;">
+              Open <code style="background:#f5f5f3;padding:2px 6px;border-radius:4px;">js/firebase.js</code>
+              and replace the placeholder config at the top with your Firebase project credentials.
+            </p>
+            <div style="background:#f5f5f3;border-radius:8px;padding:1rem;font-size:0.8rem;color:#444;line-height:1.8;">
+              1. Go to <strong>console.firebase.google.com</strong><br>
+              2. Create a project → Add a web app<br>
+              3. Copy the <code>firebaseConfig</code> object<br>
+              4. Paste it into <code>js/firebase.js</code><br>
+              5. Refresh this page
+            </div>
+            <p style="margin-top:1rem;font-size:0.8rem;color:#6B6966;">
+              See <strong>README.md</strong> for the full setup guide.
+            </p>
+          </div>
+        </div>`;
+    } else {
+      const { default: _ } = await import('./js/app.js');
+    }
+  </script>
+</body>
+</html>
