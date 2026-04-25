@@ -6,7 +6,7 @@ function setSplashMsg(msg) {
 }
 
 function isPlaceholderConfig(cfg) {
-  return !cfg || cfg.apiKey === 'YOUR_API_KEY' || !cfg.apiKey;
+  return !cfg || cfg.apiKey === 'AIzaSyDbL5hPbfsR_8xXI9Tu84ulBMVGujfM_1s' || !cfg.apiKey;
 }
 
 function showSetupScreen() {
