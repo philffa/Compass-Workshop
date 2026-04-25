@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planwise</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Firebase loads dynamically in boot.js -->
+</head>
+<body>
+
+  <!-- App shell — visible immediately, no JS required -->
+  <div id="app">
+    <div id="splash" style="
+      min-height:100vh;
+      display:flex;align-items:center;justify-content:center;
+      flex-direction:column;gap:14px;
+      font-family:'DM Sans',system-ui,sans-serif;
+      background:#F8F7F5;
+    ">
+      <!-- Logo mark drawn inline — no font dependency -->
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="28" cy="28" r="28" fill="#E1F5EE"/>
+        <circle cx="28" cy="28" r="14" fill="#1D9E75"/>
+        <circle cx="28" cy="28" r="7"  fill="#0F6E56"/>
+      </svg>
+      <div style="font-size:1.5rem;font-weight:600;color:#0F6E56;letter-spacing:-0.02em;">Planwise</div>
+      <div style="font-size:0.85rem;color:#6B6966;" id="splash-msg">Loading…</div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script>
+    // ── Config check — runs synchronously before any module loads ────────────
+    // Read the config from a global that firebase.js will set, OR detect
+    // placeholder values by trying to import synchronously isn't possible,
+    // so we expose the config check as a window global set by config.js below.
+    window.__planwiseReady = false;
+
+    window.addEventListener('unhandledrejection', function(e) {
+      const msg = e.reason?.message || String(e.reason) || 'Unknown error';
+      window.__showFatalError(msg);
+    });
+
+    function showFatalError(msg) {
+      const app = document.getElementById('app');
+      if (!app) return;
+      const isAuthError = msg && (msg.includes('INTERNAL ASSERTION') || msg.includes('sign-in') || msg.includes('auth'));
+      app.innerHTML = `
+        <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;font-family:'DM Sans',system-ui,sans-serif;background:#F8F7F5;">
+          <div style="max-width:460px;">
+            <div style="font-size:1.5rem;margin-bottom:1rem;">⚠️</div>
+            <h2 style="margin-bottom:0.5rem;color:#1a1917;font-size:1.1rem;">Something went wrong</h2>
+            <p style="color:#6B6966;margin-bottom:1rem;font-size:0.88rem;line-height:1.6;">${msg}</p>
+            ${isAuthError ? `<button onclick="window.__clearAndRetry()"
+              style="background:#0F6E56;color:white;border:none;padding:0.6rem 1.2rem;
+              border-radius:8px;font-size:0.88rem;cursor:pointer;margin-bottom:1rem;font-family:inherit;">
+              Clear cache &amp; try again
+            </button><br>` : ''}
+            <div style="background:#f5f5f3;border-radius:8px;padding:1rem;font-size:0.82rem;color:#444;line-height:1.8;">
+              <strong>Common fixes:</strong><br>
+              • Refresh the page<br>
+              • Open via a local server, not <code>file://</code><br>
+              &nbsp;&nbsp;Run: <code>npx serve . -l 3000</code><br>
+              • Check your Firebase config in <code>js/config.js</code><br>
+              • Make sure Firebase Auth and Firestore are enabled
+            </div>
+          </div>
+        </div>`;
+    }
+
+    window.__showFatalError = showFatalError;
+
+    window.__clearAndRetry = async function() {
+      try {
+        const dbs = await indexedDB.databases?.() ?? [];
+        for (const d of dbs) {
+          if (d.name?.includes('firebase')) indexedDB.deleteDatabase(d.name);
+        }
+      } catch(e) {}
+      Object.keys(localStorage).forEach(k => {
+        if (k.includes('firebase')) localStorage.removeItem(k);
+      });
+      window.location.reload();
+    };
+  </script>
+
+  <!-- Config must load before boot -->
+  <script src="js/config.js"></script>
+  <script type="module" src="js/boot.js"></script>
+
+</body>
+</html>
