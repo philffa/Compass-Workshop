@@ -5,7 +5,7 @@
 // Get them from: console.firebase.google.com → your project → Project settings → Web app
 // ─────────────────────────────────────────────────────────────────────────────
 
-const firebaseConfig = {
+window.__firebaseConfig = {
   apiKey: "AIzaSyDbL5hPbfsR_8xXI9Tu84ulBMVGujfM_1s",
   authDomain: "compass-workshop-7a0e1.firebaseapp.com",
   projectId: "compass-workshop-7a0e1",
